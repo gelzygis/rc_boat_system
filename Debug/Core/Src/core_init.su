@@ -1,5 +1,4 @@
 core_init.c:36:13:MX_USART1_UART_Init	8	static
-core_init.c:47:6:SystemClock_Config	72	static
 core_init.c:72:13:MX_GPIO_Init	40	static
 core_init.c:107:6:init_uart	16	static
 core_init.c:113:6:init_GPIO	16	static

@@ -66,6 +66,7 @@ static void MX_TIM2_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+int32_t CH1_DC = 0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -92,6 +93,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -100,9 +102,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+  	while(CH1_DC < 65535)
+  	{
+  	    TIM2->CCR1 = CH1_DC;
+  	    CH1_DC += 70;
+  	    HAL_Delay(1);
+  	}
+  	while(CH1_DC > 0)
+  	{
+  	    TIM2->CCR1 = CH1_DC;
+  	    CH1_DC -= 70;
+  	    HAL_Delay(1);
+  	}
   }
   /* USER CODE END 3 */
 }
@@ -111,8 +122,7 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
-{
+void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
