@@ -1,0 +1,38 @@
+!SESSION 2021-06-19 16:37:24.418 -----------------------------------------------
+eclipse.buildId=Version 1.6.1
+java.version=11.0.9.1
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  C:\Users\pauli\Desktop\git\rc_boat_system\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\pauli\Desktop\git\rc_boat_system C:\Users\pauli\Desktop\git\rc_boat_system\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2021-06-19 16:37:28.719
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-06-19 16:37:28.751
+!MESSAGE Log4j initialized with config file C:\Users\pauli\Desktop\git\rc_boat_system\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-06-19 16:37:30.520
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 4 4 2021-06-19 16:37:33.663
+!MESSAGE com.st.stm32cube.ide.mcu.ide/META-INF/version/build_ref file not found, build reference will not be reported into properties
+!SESSION 2021-06-20 10:34:25.836 -----------------------------------------------
+eclipse.buildId=Version 1.6.1
+java.version=11.0.9.1
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  C:\Users\pauli\Desktop\git\rc_boat_system\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\pauli\Desktop\git\rc_boat_system C:\Users\pauli\Desktop\git\rc_boat_system\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2021-06-20 10:34:28.987
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-06-20 10:34:29.046
+!MESSAGE Log4j initialized with config file C:\Users\pauli\Desktop\git\rc_boat_system\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-06-20 10:34:31.761
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 4 4 2021-06-20 10:34:33.874
+!MESSAGE com.st.stm32cube.ide.mcu.ide/META-INF/version/build_ref file not found, build reference will not be reported into properties
