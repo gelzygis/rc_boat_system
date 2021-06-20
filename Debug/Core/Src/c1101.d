@@ -1,5 +1,5 @@
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.o: \
- ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c \
+Core/Src/c1101.o: ../Core/Src/c1101.c ../Core/Inc/c1101.h \
+ ../Core/Inc/ccpacket.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -26,6 +26,12 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+
+../Core/Inc/c1101.h:
+
+../Core/Inc/ccpacket.h:
+
+../Core/Inc/main.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 
