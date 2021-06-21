@@ -119,12 +119,12 @@ void init_GPIO (bool var) {
 void USART1_String_Parse (char* data) {
 	const char* carriage_return_append = "\r";
 	char ptr[MAX_STRING_PARSE_SIZE];
-	memset(ptr, NULL, strlen(ptr));
+	memset(ptr, 0, strlen(ptr));
 	if (strlen(data) > MAX_STRING_PARSE_SIZE) {
-		HAL_UART_Transmit(&huart1, error_string_table[eStringIsTooLarge].ErrorStr, strlen(error_string_table[eStringIsTooLarge].ErrorStr), 15);
+		HAL_UART_Transmit(&huart1, (uint8_t*)&error_string_table[eStringIsTooLarge].ErrorStr, strlen(error_string_table[eStringIsTooLarge].ErrorStr), 15);
 	} else {
 		strncpy(ptr, data, strlen(data));
 		strcat(ptr, carriage_return_append);
-		HAL_UART_Transmit(&huart1, ptr, strlen(data)+strlen(carriage_return_append), 100);
+		HAL_UART_Transmit(&huart1, (uint8_t*)&ptr, strlen(data)+strlen(carriage_return_append), 100);
 	}
 }

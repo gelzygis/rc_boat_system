@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <ccpacket.h>
 #include <main.h>
+#include <string.h>
 
 /**
  * Macros
@@ -28,6 +29,12 @@ int test = CCPACKET_BUFFER_LEN;
   * PATABLE
   */
 //const byte paTable[8] = {0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60};
+//Microseconds delay https://controllerstech.com/create-1-microsecond-delay-stm32/
+void delay_us (uint16_t us)
+{
+	__HAL_TIM_SET_COUNTER(&htim1,0);  // set the counter value a 0
+	while (__HAL_TIM_GET_COUNTER(&htim1) < us);  // wait for the counter to reach the us input in the parameter
+}
 
 /**
  * CC1101
@@ -68,9 +75,9 @@ void WriteReg(uint8_t regAddr, uint8_t value)
   //cc1101_Select();                      // Select CC1101 Do I need to do it manually?
   //wait_Miso();                          // Wait until MISO goes low
   //SPI.transfer(regAddr);                // Send register address
-  HAL_SPI_Transmit(&hspi1, regAddr, 1, 100); // Send register address
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&regAddr, 1, 100); // Send register address
   //SPI.transfer(value);                  // Send value
-  HAL_SPI_Transmit(&hspi1, value, 1, 100); // Send value
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&value, 1, 100); // Send value
   //cc1101_Deselect();                    // Deselect CC1101
 }
 
@@ -85,15 +92,15 @@ void WriteReg(uint8_t regAddr, uint8_t value)
  */
 void WriteBurstReg(uint8_t regAddr, uint8_t* buffer, uint8_t len)
 {
-  uint8_t addr, i;
+  uint8_t addr;
 
   addr = regAddr | WRITE_BURST;         // Enable burst transfer
   //cc1101_Select();                      // Select CC1101
   //wait_Miso();                          // Wait until MISO goes low
-  HAL_SPI_Transmit(&hspi1, addr, 1, 100); // Send value
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&addr, 1, 100); // Send value
   //SPI.transfer(addr);                   // Send register address
 
-  HAL_SPI_Transmit(&hspi1, buffer, strlen(buffer), 100); // Send value
+  HAL_SPI_Transmit(&hspi1, buffer, strlen((const char*)buffer), 100); // Send value
   //for(i=0 ; i<len ; i++)
   //  SPI.transfer(buffer[i]);            // Send value
 
@@ -111,7 +118,7 @@ void CmdStrobe(uint8_t cmd)
 {
   //cc1101_Select();                      // Select CC1101
   //wait_Miso();                          // Wait until MISO goes low
-  HAL_SPI_Transmit(&hspi1, cmd, 1, 100); // Send value
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&cmd, 1, 100); // Send value
   //SPI.transfer(cmd);                    // Send strobe command
   //cc1101_Deselect();                    // Deselect CC1101
 }
@@ -135,8 +142,8 @@ uint8_t ReadReg(uint8_t regAddr, uint8_t regType)
   //cc1101_Select();                      // Select CC1101
   //wait_Miso();                          // Wait until MISO goes low
   //SPI.transfer(addr);                   // Send register address
-  HAL_SPI_Transmit(&hspi1, addr, 1, 100); // Send value
-  HAL_SPI_Receive(&hspi1, val, 1, 100);   // Read result
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&addr, 1, 100); // Send value
+  HAL_SPI_Receive(&hspi1, (uint8_t*)&val, 1, 100);   // Read result
   //val = SPI.transfer(0x00);             // Read result
   //cc1101_Deselect();                    // Deselect CC1101
 
@@ -154,14 +161,14 @@ uint8_t ReadReg(uint8_t regAddr, uint8_t regType)
  */
 void ReadBurstReg(uint8_t * buffer, uint8_t regAddr, uint8_t len)
 {
-  uint8_t addr, i;
+  uint8_t addr;
 
   addr = regAddr | READ_BURST;
   //cc1101_Select();                      // Select CC1101
   //wait_Miso();                          // Wait until MISO goes low
-  HAL_SPI_Transmit(&hspi1, addr, 1, 100); // Send value
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&addr, 1, 100); // Send value
   //SPI.transfer(addr);                   // Send register address
-  HAL_SPI_Receive(&hspi1, buffer, strlen(buffer), 100);   // Read result
+  HAL_SPI_Receive(&hspi1, buffer, strlen((const char*)buffer), 100);   // Read result
   //for(i=0 ; i<len ; i++)
   //  buffer[i] = SPI.transfer(0x00);     // Read result byte by byte
   //cc1101_Deselect();                    // Deselect CC1101
@@ -175,15 +182,15 @@ void ReadBurstReg(uint8_t * buffer, uint8_t regAddr, uint8_t len)
 void CC1101_reset(void)
 {
   cc1101_Deselect();                    // Deselect CC1101
-  delayMicroseconds(5);
+  delay_us(5);
   cc1101_Select();                      // Select CC1101
-  delayMicroseconds(10);
+  delay_us(10);
   cc1101_Deselect();                    // Deselect CC1101
-  delayMicroseconds(41);
+  delay_us(41);
   cc1101_Select();                      // Select CC1101
 
   //wait_Miso();                          // Wait until MISO goes low
-  HAL_SPI_Transmit(&hspi1, CC1101_SRES, 1, 100); // Send value
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)CC1101_SRES, 1, 100); // Send value
   //SPI.transfer(CC1101_SRES);            // Send reset command strobe
   //wait_Miso();                          // Wait until MISO goes low
 
@@ -262,7 +269,7 @@ void CC1101_setCCregs(void)
   // Send empty packet
   CCPACKET packet;
   packet.length = 0;
-  HAL_SPI_Transmit(&hspi1, packet.data, strlen(packet.data), 100); // Send value
+  HAL_SPI_Transmit(&hspi1, packet.data, strlen((const char *)packet.data), 100); // Send value
   //sendData(packet);
 }
 
@@ -315,7 +322,7 @@ void CC1101_setSyncWord(uint8_t syncH, uint8_t syncL)
  *
  * 'syncH'	Synchronization word - pointer to 2-byte array
  */
-void CC1101_setSyncWord(uint8_t sync) //pakeiciau is pointer i char
+void CC1101_setSyncWord(uint8_t sync) //pakeiciau is
 {
 	//padaryti kad
 	writeReg(CC1101_SYNC1, sync & 0xF0); //higher part of the byte
@@ -435,7 +442,7 @@ bool CC1101_sendData(CCPACKET packet)
     return false;
   }
 
-  delayMicroseconds(500);
+  delay_us(500);
 
   if (packet.length > 0)
   {
@@ -515,7 +522,9 @@ uint8_t CC1101_receiveData(CCPACKET * packet)
       // Read LQI and CRC_OK
       val = readConfigReg(CC1101_RXFIFO);
       packet->lqi = val & 0x7F;
-      packet->crc_ok = bitRead(val, 7);
+      uint8_t last_bit = val & 0x80; 	// 1000 0000 in binary
+      last_bit = last_bit >> 7;			// shift so it would be either 1 or 0
+      packet->crc_ok = last_bit;
     }
   }
   else

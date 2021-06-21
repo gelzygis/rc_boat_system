@@ -1,0 +1,4 @@
+core_init.c:47:6:SystemClock_Config	72	static
+core_init.c:107:6:init_uart	0	static
+core_init.c:113:6:init_GPIO	48	static
+core_init.c:119:6:USART1_String_Parse	208	static

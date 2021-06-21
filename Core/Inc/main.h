@@ -31,11 +31,12 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 
 SPI_HandleTypeDef hspi1;
+TIM_HandleTypeDef htim1;
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-
+void MX_SPI1_Init(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
